@@ -22,12 +22,13 @@ const Sidebar = (props) => {
   };
 
   const sidebarList = [
-    { name: "All Categories", route: "/dashboard" },
-    { name: "Add Category", route: "/dashboard/add-category" },
-    { name: "All Apps", route: "/dashboard/all-apps" },
-    { name: "Featured Apps", route: "/dashboard/featured-apps" },
-    { name: "All Users", route: "/dashboard/users" },
-    { name: "Logout", route: "/", logout: true },
+    { key: "1", name: "All Categories", route: "/dashboard" },
+    { key: "2", name: "Add Category", route: "/dashboard/add-category" },
+    { key: "3", name: "All Apps", route: "/dashboard/all-apps" },
+    { key: "4", name: "Add App", route: "/dashboard/add-app" },
+    { key: "5", name: "Featured Apps", route: "/dashboard/featured-apps" },
+    { key: "6", name: "All Users", route: "/dashboard/users" },
+    { key: "7", name: "Logout", route: "/", logout: true },
   ];
 
   return (
@@ -70,11 +71,11 @@ const Sidebar = (props) => {
         <ul className="flex flex-col gap-8">
           {sidebarList.map((item, index) => {
             return (
-              <div className="max-w-xs">
+              <div key={item.key} className="max-w-xs">
                 <Link
+                  key={item.key}
                   to={item.route}
-                  key={index.toString()}
-                  className="text-xltext-white cursor-pointer"
+                  className="text-xl text-white cursor-pointer"
                   onClick={() => {
                     props.setOpen(!props.open);
                     props.setShowBackdrop(false);
@@ -116,11 +117,11 @@ const Sidebar = (props) => {
             </p>
           </div>
           <ul className="w-full max-w-[180px]">
-            {sidebarList.map((item, index) => {
+            {sidebarList.map((item) => {
               return (
                 <div
-                  key={index}
-                  className={`mb-4 rounded ease-in-out transition-all duration-150
+                  key={item.key}
+                  className={`mb-3 rounded ease-in-out transition-all duration-150
                   hover:bg-slate-100 hover:bg-opacity-20 hover:pl-4
                   ${
                     location.pathname === item.route &&
@@ -128,6 +129,7 @@ const Sidebar = (props) => {
                   }`}
                 >
                   <Link
+                    key={item.key}
                     to={item.route}
                     className="block text-xl text-white px-2 py-2"
                     onClick={() => {

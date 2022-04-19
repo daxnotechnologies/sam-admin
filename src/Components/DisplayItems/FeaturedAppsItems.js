@@ -1,23 +1,33 @@
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../api/firebase-config";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId }) => {
+const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId, isFeatured }) => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showFeatureModal, setShowFeatureModal] = useState(false);
+  const [removefeatureApp, setremoveFeatureApp] = useState(false);
 
   const deleteFtApp = async (id) => {
     const ftAppDoc = doc(db, "featuredApps", id);
     deleteDoc(ftAppDoc);
   };
 
+  const updateApp = async () => {
+    setremoveFeatureApp(true);
+    const data = doc(db, "apps", ftAppId);
+    await updateDoc(data, {
+      featured: removefeatureApp,
+    });
+  };
+
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
-        <div className="col-span-8 lg:col-span-9 flex gap-4 place-self-start text-left font-semibold text-primary">
+        <div className="col-span-6 lg:col-span-8 flex gap-4 place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center">
             <img
               src={imgSrc}
@@ -38,20 +48,20 @@ const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId }) => {
           </div>
         </div>
 
-        <div className="col-span-2 lg:col-span-1">
+        <div className="col-span-3 lg:col-span-2">
           <Button
             onClick={() => {
-              navigate(`/dashboard/edit-group/${ftAppId}`);
+              setShowFeatureModal(true);
             }}
           >
-            Edit
+            Remove
           </Button>
         </div>
         <div className="col-span-3 lg:col-span-2">
           <Button
             alt
             onClick={() => {
-              setShowModal(true);
+              setShowDeleteModal(true);
               // alert(categoryName + " with Id " + categoryId + " deleted");
             }}
           >
@@ -60,17 +70,35 @@ const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId }) => {
         </div>
       </div>
       <Backdrop
-        title="Remove!"
-        show={showModal}
-        onClick={() => setShowModal(false)}
+        title="Delete!"
+        show={showDeleteModal}
+        onClick={() => setShowDeleteModal(false)}
       >
-        Are you sure you want to remove this App?
-        <div className="self-end">
+        Are you sure you want to delete this App?
+        <div className="self-end mt-4">
           <Button
             type={"button"}
             onClick={() => {
               deleteFtApp(ftAppId);
-              setShowModal(false);
+              setShowDeleteModal(false);
+            }}
+          >
+            OK
+          </Button>
+        </div>
+      </Backdrop>
+      <Backdrop
+        title="Remove Featured App!"
+        show={showFeatureModal}
+        onClick={() => setShowFeatureModal(false)}
+      >
+        Are you sure you want to remove this App from "Featured" List?
+        <div className="self-end mt-4 ">
+          <Button
+            type={"button"}
+            onClick={() => {
+              updateApp();
+              setShowFeatureModal(false);
             }}
           >
             OK

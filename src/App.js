@@ -13,6 +13,9 @@ import AllCategories from "./Pages/AllCategories";
 import AddCategory from "./Pages/AddCategory";
 import AllApps from "./Pages/AllApps";
 import FeaturedApps from "./Pages/FeaturedApps";
+import AddApp from "./Pages/AddApp";
+import EditCategory from "./Components/DisplayItems/EditCategory";
+import EditApp from "./Components/DisplayItems/EditApp";
 
 function App() {
   return (
@@ -21,11 +24,20 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route path="/dashboard" element={<MainPage />}>
           <Route index element={<AllCategories />} />
-          <Route path="/dashboard/add-category" element={<AddCategory />} />
+          <Route path="/dashboard/categories" element={<AllCategories />} />
           <Route path="/dashboard/all-apps" element={<AllApps />} />
           <Route path="/dashboard/featured-apps" element={<FeaturedApps />} />
+
           <Route path="/dashboard/users" element={<Users />} />
+          <Route path="/dashboard/add-category" element={<AddCategory />} />
+          <Route path="/dashboard/add-app" element={<AddApp />} />
+
+          <Route path="/dashboard/edit-app/:appId" element={<EditApp />} />
           <Route path="/dashboard/edit-user/:userId" element={<EditUser />} />
+          <Route
+            path="/dashboard/edit-category/:categoryId"
+            element={<EditCategory />}
+          />
 
           {/* <Route path="/dashboard/tutor-details" element={<TutorDetails />} />
           <Route path="/dashboard/add-job" element={<AddJob />} />

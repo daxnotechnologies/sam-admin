@@ -11,14 +11,14 @@ const AllApps = () => {
   const appsCollectionRef = collection(db, "apps");
 
   useEffect(() => {
-    const getCategories = async () => {
+    const getApps = async () => {
       const data = await getDocs(appsCollectionRef);
-
       setApps(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setIsloading(false);
     };
-    getCategories();
+    getApps();
   }, [appsCollectionRef]);
+
   const date = new Date();
   const currentDate = `${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()}`;
   return (
@@ -61,6 +61,7 @@ const AllApps = () => {
                     <AllAppsItems
                       appName={item.name}
                       appId={item.id}
+                      isFeatured={item.featured}
                       imgSrc={""}
                     />
                   );

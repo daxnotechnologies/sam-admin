@@ -40,7 +40,7 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
         <div className="col-span-2 lg:col-span-1">
           <Button
             onClick={() => {
-              navigate(`/dashboard/edit-group/${categoryId}`);
+              navigate(`/dashboard/edit-category/${categoryId}`);
             }}
           >
             Edit
@@ -64,7 +64,7 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
         onClick={() => setShowModal(false)}
       >
         Are you sure you want to delete this Category?
-        <div className="self-end">
+        <div className="self-end mt-4">
           <Button
             type={"button"}
             onClick={() => {

@@ -8,17 +8,18 @@ import Spinner from "../Components/UI/Spinner";
 const FeaturedApps = () => {
   const [isloading, setIsloading] = useState(true);
   const [ftApps, setFtApps] = useState([]);
-  const ftAppsCollectionRef = collection(db, "featuredApps");
+
+  const appsCollectionRef = collection(db, "apps");
 
   useEffect(() => {
-    const getCategories = async () => {
-      const data = await getDocs(ftAppsCollectionRef);
-
+    const getApps = async () => {
+      const data = await getDocs(appsCollectionRef);
       setFtApps(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setIsloading(false);
     };
-    getCategories();
-  }, [ftAppsCollectionRef]);
+    getApps();
+  }, [appsCollectionRef]);
+
   const date = new Date();
   const currentDate = `${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()}`;
   return (
@@ -57,13 +58,18 @@ const FeaturedApps = () => {
             >
               <div className="flex flex-col gap-y-7 ">
                 {ftApps.map((item) => {
-                  return (
-                    <FeaturedAppsItems
-                      ftAppName={item.name}
-                      ftAppId={item.id}
-                      imgSrc={""}
-                    />
-                  );
+                  if (item.featured === true) {
+                    return (
+                      <FeaturedAppsItems
+                        key={item.id}
+                        ftAppId={item.id}
+                        ftAppName={item.name}
+                        isFeatured={item.featured}
+                        imgSrc={""}
+                      />
+                    );
+                  }
+                  return null;
                 })}
               </div>
             </div>

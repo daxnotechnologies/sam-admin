@@ -1,22 +1,32 @@
-import { deleteDoc, doc } from "firebase/firestore";
+import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../api/firebase-config";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const AllAppsItems = ({ appName, imgSrc, appId }) => {
+const AllAppsItems = ({ appName, imgSrc, appId, isFeatured }) => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showFeatureModal, setShowFeatureModal] = useState(false);
+  const [featureApp, setFeatureApp] = useState(false);
 
   const deleteApp = async (id) => {
     const appDoc = doc(db, "apps", id);
     deleteDoc(appDoc);
   };
+
+  const updateApp = async () => {
+    const data = doc(db, "apps", appId);
+    await updateDoc(data, {
+      featured: featureApp,
+    });
+  };
+
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
-        <div className="col-span-8 lg:col-span-9 flex gap-4 place-self-start text-left font-semibold text-primary">
+        <div className="col-span-4 lg:col-span-7 flex gap-4 place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center">
             <img
               src={imgSrc}
@@ -36,11 +46,24 @@ const AllAppsItems = ({ appName, imgSrc, appId }) => {
             </div>
           </div>
         </div>
+        <div className="col-span-3 lg:col-span-2">
+          {isFeatured ? (
+            <Button disabled={true}>Feature</Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setShowFeatureModal(true);
+              }}
+            >
+              Feature
+            </Button>
+          )}
+        </div>
 
         <div className="col-span-2 lg:col-span-1">
           <Button
             onClick={() => {
-              navigate(`/dashboard/edit-group/${appId}`);
+              navigate(`/dashboard/edit-app/${appId}`);
             }}
           >
             Edit
@@ -50,7 +73,7 @@ const AllAppsItems = ({ appName, imgSrc, appId }) => {
           <Button
             alt
             onClick={() => {
-              setShowModal(true);
+              setShowDeleteModal(true);
               // alert(categoryName + " with Id " + categoryId + " deleted");
             }}
           >
@@ -60,16 +83,35 @@ const AllAppsItems = ({ appName, imgSrc, appId }) => {
       </div>
       <Backdrop
         title="Remove!"
-        show={showModal}
-        onClick={() => setShowModal(false)}
+        show={showDeleteModal}
+        onClick={() => setShowDeleteModal(false)}
       >
         Are you sure you want to remove this App?
-        <div className="self-end">
+        <div className="self-end mt-4">
           <Button
             type={"button"}
             onClick={() => {
               deleteApp(appId);
-              setShowModal(false);
+              setShowDeleteModal(false);
+            }}
+          >
+            OK
+          </Button>
+        </div>
+      </Backdrop>
+      <Backdrop
+        title="Feature App!"
+        show={showFeatureModal}
+        onClick={() => setShowFeatureModal(false)}
+      >
+        Are you sure you want to Feature this App?
+        <div className="self-end mt-4">
+          <Button
+            type={"button"}
+            onClick={() => {
+              setFeatureApp(true);
+              updateApp();
+              setShowFeatureModal(false);
             }}
           >
             OK
