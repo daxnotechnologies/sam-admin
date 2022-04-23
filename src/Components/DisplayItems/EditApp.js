@@ -31,6 +31,10 @@ const EditApp = () => {
   const formik = useFormik({
     initialValues: {
       name: selectedApp.name,
+      downloads: "",
+      rating: "",
+      description: "",
+
       /* email: selectedApp.email,
       password: selectedApp.password,
       address: selectedApp.address, */
@@ -65,10 +69,11 @@ const EditApp = () => {
   };
 
   const updateApp = async (values) => {
-    console.log(imagePath);
+    // console.log(imagePath);
     const data = doc(usersCollectionRef, appId);
     await updateDoc(data, {
       name: values.name,
+
       /* email: values.email,
       password: values.password,
       address: values.address, */
@@ -117,26 +122,26 @@ const EditApp = () => {
           <Input
             width="full"
             type="text"
-            label="E-mail:"
-            name="email"
+            label="Downloads:"
+            name="downloads"
             onChange={formik.handleChange}
-            value={formik.values.email}
+            value={formik.values.downloads}
           />
           <Input
             width="full"
             type="text"
-            label="Password:"
-            name="password"
+            label="Rating:"
+            name="rating"
             onChange={formik.handleChange}
-            value={formik.values.password}
+            value={formik.values.rating}
           />
           <TextArea
             rows={1}
             type="text"
-            label="Address:"
-            name="address"
+            label="Description:"
+            name="description"
             onChange={formik.handleChange}
-            value={formik.values.address}
+            value={formik.values.description}
           />
 
           <div className="flex justify-end gap-8 mt-4">
@@ -151,7 +156,7 @@ const EditApp = () => {
             <Button
               type="button"
               onClick={() => {
-                navigate("/dashboard/users");
+                navigate("/dashboard/all-apps");
               }}
             >
               <div className="text-base p-1">Cancel</div>
@@ -162,7 +167,7 @@ const EditApp = () => {
             show={showModal}
             onClick={() => setShowModal(false)}
           >
-            Are you sure you want to update user details?
+            Are you sure you want to update App details?
             <div className="self-end">
               <Button type={"submit"} onClick={() => setShowModal(false)}>
                 OK

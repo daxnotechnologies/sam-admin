@@ -2,6 +2,7 @@ import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../api/firebase-config";
+import useApp from "../../hooks/useApp";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
@@ -9,19 +10,9 @@ const AllAppsItems = ({ appName, imgSrc, appId, isFeatured }) => {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
-  const [featureApp, setFeatureApp] = useState(false);
+  const [featured, setFeatured] = useState(false);
 
-  const deleteApp = async (id) => {
-    const appDoc = doc(db, "apps", id);
-    deleteDoc(appDoc);
-  };
-
-  const updateApp = async () => {
-    const data = doc(db, "apps", appId);
-    await updateDoc(data, {
-      featured: featureApp,
-    });
-  };
+  const { deleteApp, featureApp } = useApp();
 
   return (
     <>
@@ -52,6 +43,7 @@ const AllAppsItems = ({ appName, imgSrc, appId, isFeatured }) => {
           ) : (
             <Button
               onClick={() => {
+                setFeatured(true);
                 setShowFeatureModal(true);
               }}
             >
@@ -109,8 +101,7 @@ const AllAppsItems = ({ appName, imgSrc, appId, isFeatured }) => {
           <Button
             type={"button"}
             onClick={() => {
-              setFeatureApp(true);
-              updateApp();
+              featureApp(appId, featured);
               setShowFeatureModal(false);
             }}
           >

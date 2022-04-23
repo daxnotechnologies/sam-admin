@@ -4,29 +4,19 @@ import { db } from "../api/firebase-config";
 import Card from "../Components/Card";
 import AllAppsItems from "../Components/DisplayItems/AllAppsItems";
 import Spinner from "../Components/UI/Spinner";
+import useFetch from "../hooks/useFetch";
+import currentDate from "../utility/currentDate";
 
 const AllApps = () => {
-  const [isloading, setIsloading] = useState(true);
-  const [apps, setApps] = useState([]);
-  const appsCollectionRef = collection(db, "apps");
+  const { data: allApps, isloading } = useFetch("apps");
+  const date = currentDate();
 
-  useEffect(() => {
-    const getApps = async () => {
-      const data = await getDocs(appsCollectionRef);
-      setApps(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setIsloading(false);
-    };
-    getApps();
-  }, [appsCollectionRef]);
-
-  const date = new Date();
-  const currentDate = `${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()}`;
   return (
     <Card>
       <div className="w-[90%] max-w-5xl h-full mx-auto">
         <header className="flex flex-col gap-2 justify-start mb-14 ">
           <h1 className="text-4xl">All Apps</h1>
-          <p className="text-gray-400">{currentDate}</p>
+          <p className="text-gray-400">{date}</p>
         </header>
         {/* Table */}
         {/* Header */}
@@ -56,9 +46,10 @@ const AllApps = () => {
             md:overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-300"
             >
               <div className="flex flex-col gap-y-7 ">
-                {apps.map((item) => {
+                {allApps.map((item) => {
                   return (
                     <AllAppsItems
+                      key={item.id}
                       appName={item.name}
                       appId={item.id}
                       isFeatured={item.featured}

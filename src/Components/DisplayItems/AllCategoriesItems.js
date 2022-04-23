@@ -2,17 +2,14 @@ import { deleteDoc, doc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../api/firebase-config";
+import useCategory from "../../hooks/useCategory";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
 const AllCategoriesItems = ({ categoryName, categoryId }) => {
   const navigate = useNavigate();
+  const { deleteCategory } = useCategory();
   const [showModal, setShowModal] = useState(false);
-
-  const deleteCategory = async (id) => {
-    const categoryDoc = doc(db, "categories", id);
-    deleteDoc(categoryDoc);
-  };
 
   return (
     <>
@@ -72,7 +69,7 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
               setShowModal(false);
             }}
           >
-            OK
+            Yes
           </Button>
         </div>
       </Backdrop>

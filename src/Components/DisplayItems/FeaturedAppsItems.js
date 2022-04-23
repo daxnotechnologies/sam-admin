@@ -2,6 +2,7 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../api/firebase-config";
+import useApp from "../../hooks/useApp";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
@@ -9,20 +10,21 @@ const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId, isFeatured }) => {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
-  const [removefeatureApp, setremoveFeatureApp] = useState(false);
+  const [removefeatureApp, setremoveFeatureApp] = useState(true);
 
-  const deleteFtApp = async (id) => {
+  const { deleteApp, featureApp } = useApp();
+
+  /* const deleteApp = async (id) => {
     const ftAppDoc = doc(db, "featuredApps", id);
     deleteDoc(ftAppDoc);
   };
 
-  const updateApp = async () => {
-    setremoveFeatureApp(true);
+  const featureApp = async () => {
     const data = doc(db, "apps", ftAppId);
     await updateDoc(data, {
       featured: removefeatureApp,
     });
-  };
+  }; */
 
   return (
     <>
@@ -51,6 +53,7 @@ const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId, isFeatured }) => {
         <div className="col-span-3 lg:col-span-2">
           <Button
             onClick={() => {
+              setremoveFeatureApp(false);
               setShowFeatureModal(true);
             }}
           >
@@ -79,11 +82,11 @@ const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId, isFeatured }) => {
           <Button
             type={"button"}
             onClick={() => {
-              deleteFtApp(ftAppId);
+              deleteApp(ftAppId);
               setShowDeleteModal(false);
             }}
           >
-            OK
+            Yes
           </Button>
         </div>
       </Backdrop>
@@ -97,11 +100,11 @@ const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId, isFeatured }) => {
           <Button
             type={"button"}
             onClick={() => {
-              updateApp();
+              featureApp(ftAppId, removefeatureApp);
               setShowFeatureModal(false);
             }}
           >
-            OK
+            Yes
           </Button>
         </div>
       </Backdrop>

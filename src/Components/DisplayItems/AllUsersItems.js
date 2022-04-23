@@ -2,18 +2,17 @@ import { deleteDoc, doc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../../api/firebase-config";
+import useUser from "../../hooks/useUser";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
 const AllUsersItems = ({ userName, userId, imgPath }) => {
   let navigate = useNavigate();
+  const { deleteUser } = useUser();
+
   const [isloading, setIsloading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const deleteUser = async (id) => {
-    const userDoc = doc(db, "users", id);
-    deleteDoc(userDoc);
-  };
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
@@ -67,12 +66,12 @@ const AllUsersItems = ({ userName, userId, imgPath }) => {
         </div>
       </div>
       <Backdrop
-        title="Delete!"
+        title="Delete User!"
         show={showModal}
         onClick={() => setShowModal(false)}
       >
         Are you sure you want to delete the user?
-        <div className="self-end">
+        <div className="self-end mt-4">
           <Button
             type={"button"}
             onClick={() => {
@@ -80,7 +79,7 @@ const AllUsersItems = ({ userName, userId, imgPath }) => {
               setShowModal(false);
             }}
           >
-            OK
+            Yes
           </Button>
         </div>
       </Backdrop>

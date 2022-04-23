@@ -1,36 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Card from "../Components/Card";
-import AllCategoriesItems from "../Components/DisplayItems/GroupsItems";
 import AllUsersItems from "../Components/DisplayItems/AllUsersItems";
-import { tutors } from "../Components/DummyData/tutors";
-import Search from "../Components/Searchbar";
-import { db } from "../api/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
 import Spinner from "../Components/UI/Spinner";
+import useFetch from "../hooks/useFetch";
+import currentDate from "../utility/currentDate";
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [isloading, setIsloading] = useState(true);
-  const usersCollectionRef = collection(db, "users");
-  // console.log(usersCollectionRef);
+  const { data: allUsers, isloading } = useFetch("users");
+  const date = currentDate();
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const usersData = await getDocs(usersCollectionRef);
-      setUsers(usersData.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      setIsloading(false);
-    };
-    getUsers();
-  }, [usersCollectionRef]);
-
-  const date = new Date();
-  const currentDate = `${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()}`;
   return (
     <Card>
       <div className="w-[90%] max-w-5xl h-full mx-auto">
         <header className="flex flex-col gap-2 justify-start mb-14 ">
           <h1 className="text-4xl">All Users</h1>
-          <p className="text-gray-400">{currentDate}</p>
+          <p className="text-gray-400">{date}</p>
         </header>
         {/* Table */}
         {/* Header */}
@@ -60,9 +44,10 @@ const Users = () => {
             md:overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-300"
             >
               <div className="flex flex-col gap-y-7 ">
-                {users.map((item) => {
+                {allUsers.map((item) => {
                   return (
                     <AllUsersItems
+                      key={item.id}
                       userName={item.name}
                       userId={item.id}
                       imgPath={item.imagePath}

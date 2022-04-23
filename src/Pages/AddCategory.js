@@ -2,23 +2,16 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import Card from "../Components/Card";
 import Input from "../Components/Input";
-
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../api/firebase-config";
 import TextArea from "../Components/TextArea";
 import Backdrop from "../Components/UI/BackdropModal";
 import Button from "../Components/UI/Button";
 import { useNavigate } from "react-router-dom";
+import useCategory from "../hooks/useCategory";
 
 const AddCategory = () => {
   const navigate = useNavigate();
+  const { addCategory } = useCategory();
   const [showModal, setShowModal] = useState(false);
-
-  const categoriesCollectionRef = collection(db, "categories");
-
-  const addCategory = async (values) => {
-    await addDoc(categoriesCollectionRef, values);
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -27,11 +20,7 @@ const AddCategory = () => {
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      /* alert(JSON.stringify(values, null, 2)); */
-      addCategory(values);
       setShowModal(true);
-
-      /* alert("Category Added!"); */
     },
   });
   return (
@@ -72,20 +61,21 @@ const AddCategory = () => {
         </div>
       </Card>
       <Backdrop
-        title="Add"
+        title="Add Category"
         show={showModal}
         onClick={() => setShowModal(false)}
       >
-        Category Added
+        Do you want to add this Category ?
         <div className="self-end">
           <Button
             type={"button"}
             onClick={() => {
+              addCategory(formik.values);
               setShowModal(false);
               navigate("/dashboard");
             }}
           >
-            OK
+            Yes
           </Button>
         </div>
       </Backdrop>
