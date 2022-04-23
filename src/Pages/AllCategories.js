@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Card from "../Components/Card";
+import Card from "../Components/UI/Card";
 import AllCategoriesItems from "../Components/DisplayItems/AllCategoriesItems";
 import { db } from "../api/firebase-config";
 import { collection, getDocs } from "firebase/firestore";

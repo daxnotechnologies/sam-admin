@@ -1,9 +1,9 @@
 import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../api/firebase-config";
-import Card from "../Components/Card";
+import Card from "../Components/UI/Card";
 import GroupsItems from "../Components/DisplayItems/GroupsItems";
-import Search from "../Components/Searchbar";
+import Search from "../Components/UI/Searchbar";
 import Spinner from "../Components/UI/Spinner";
 
 const Groups = () => {

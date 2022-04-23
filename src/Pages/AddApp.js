@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import Card from "../Components/Card";
-import Input from "../Components/Input";
+import Card from "../Components/UI/Card";
+import Input from "../Components/UI/Input";
 
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../api/firebase-config";
-import TextArea from "../Components/TextArea";
+import TextArea from "../Components/UI/TextArea";
 import Backdrop from "../Components/UI/BackdropModal";
 import Button from "../Components/UI/Button";
 import { useNavigate, useParams } from "react-router-dom";

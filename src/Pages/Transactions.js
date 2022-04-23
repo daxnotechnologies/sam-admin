@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { db } from "../api/firebase-config";
-import Card from "../Components/Card";
+import Card from "../Components/UI/Card";
 import TransactionItems from "../Components/DisplayItems/TransactionItems";
 import JobsDetailsItems from "../Components/DisplayItems/TransactionItems";
 import Backdrop from "../Components/UI/BackdropModal";

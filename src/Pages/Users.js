@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../Components/Card";
+import Card from "../Components/UI/Card";
 import AllUsersItems from "../Components/DisplayItems/AllUsersItems";
 import Spinner from "../Components/UI/Spinner";
 import useFetch from "../hooks/useFetch";

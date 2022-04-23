@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../api/firebase-config";
-import Input from "../Components/Input";
+import Input from "../Components/UI/Input";
 import Button from "../Components/UI/Button";
 import { setUser } from "../redux/userSlice";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Card from "../Components/Card";
+import Card from "../Components/UI/Card";
 import FeaturedAppsItems from "../Components/DisplayItems/FeaturedAppsItems";
 import Spinner from "../Components/UI/Spinner";
 import useFetch from "../hooks/useFetch";

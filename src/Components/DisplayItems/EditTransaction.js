@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import Input from "../Input";
+import Input from "../UI/Input";
 import { useFormik } from "formik";
 
 import { useNavigate, useParams } from "react-router-dom";
-import Card from "../Card";
-import TextArea from "../TextArea";
+import Card from "../UI/Card";
+import TextArea from "../UI/TextArea";
 import {
   collection,
   getDocs,

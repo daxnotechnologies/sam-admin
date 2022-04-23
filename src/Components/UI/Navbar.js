@@ -1,7 +1,5 @@
 import React from "react";
-import menu from "../Assets/Images/menu-outline.svg";
-import avatar from "../Assets/Images/profile.png";
-import Search from "./Searchbar";
+import menu from "../../Assets/Images/menu-outline.svg";
 
 const Navbar = (props) => {
   return (

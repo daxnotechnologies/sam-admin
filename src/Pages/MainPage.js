@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../Components/Navbar";
-import Sidebar from "../Components/Sidebar";
+import Navbar from "../Components/UI/Navbar";
+import Sidebar from "../Components/UI/Sidebar";
 import Spinner from "../Components/UI/Spinner";
 
 const MainPage = () => {

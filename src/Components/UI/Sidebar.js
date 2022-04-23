@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import profile from "../Assets/Images/profile.png";
-import close from "../Assets/Images/close-outline.svg";
+import profile from "../../Assets/Images/profile.png";
+import close from "../../Assets/Images/close-outline.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Backdrop from "./UI/Backdrop";
+import Backdrop from "./Backdrop";
 import { useSelector } from "react-redux";
-import { auth } from "../api/firebase-config";
+import { auth } from "../../api/firebase-config";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const Sidebar = (props) => {

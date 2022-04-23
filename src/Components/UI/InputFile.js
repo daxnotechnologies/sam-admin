@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Button from "./UI/Button";
-import Spinner from "./UI/Spinner";
+import Button from "./Button";
+import Spinner from "./Spinner";
 
 const InputFile = ({ onChange, name, onUpload, children, imageName }) => {
   const [isUploading, setIsUploading] = useState(false);

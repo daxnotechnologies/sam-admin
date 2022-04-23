@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../api/firebase-config";
-import Card from "../Components/Card";
+import Card from "../Components/UI/Card";
 import AllAppsItems from "../Components/DisplayItems/AllAppsItems";
 import Spinner from "../Components/UI/Spinner";
 import useFetch from "../hooks/useFetch";

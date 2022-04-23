@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import Card from "../Components/Card";
-import Input from "../Components/Input";
-import TextArea from "../Components/TextArea";
+import Card from "../Components/UI/Card";
+import Input from "../Components/UI/Input";
+import TextArea from "../Components/UI/TextArea";
 import Backdrop from "../Components/UI/BackdropModal";
 import Button from "../Components/UI/Button";
 import { useNavigate } from "react-router-dom";

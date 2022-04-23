@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import Input from "../Input";
+import Input from "../UI/Input";
 import { useFormik } from "formik";
 
 import { useNavigate, useParams } from "react-router-dom";
-import Card from "../Card";
-import TextArea from "../TextArea";
+import Card from "../UI/Card";
+import TextArea from "../UI/TextArea";
 import {
   collection,
   getDocs,
@@ -18,7 +18,7 @@ import Button from "../UI/Button";
 import Backdrop from "../UI/BackdropModal";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-import InputFile from "../InputFile";
+import InputFile from "../UI/InputFile";
 
 const EditUser = () => {
   const navigate = useNavigate();

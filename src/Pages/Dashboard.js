@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "../Components/Card";
-import Chart from "../Components/Chart";
+import Card from "../Components/UI/Card";
+import Chart from "../Components/UI/Chart";
 
 const tileContent = [
   { name: "Groups", number: 40 },
