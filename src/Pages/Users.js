@@ -50,7 +50,7 @@ const Users = () => {
                       key={item.id}
                       userName={item.name}
                       userId={item.id}
-                      imgPath={item.imagePath}
+                      imgePath={item.imagePath}
                     />
                   );
                 })}

@@ -27,8 +27,9 @@ const InputFile = ({ onChange, name, onUpload, children, imageName }) => {
         <Button
           type="button"
           onClick={() => {
-            setIsUploading(true);
-            onUpload(setIsUploading);
+            // setIsUploading(true);
+            onUpload();
+            // setIsUploading(true);
           }}
         >
           {children}

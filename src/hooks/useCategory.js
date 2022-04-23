@@ -20,14 +20,16 @@ const useCategory = () => {
     deleteDoc(categoryDoc);
   };
 
-  /* const featureApp = async (appId, featureApp) => {
-    const data = doc(appCollectionRef, appId);
-    await updateDoc(data, {
-      featured: featureApp,
+  const updateCategory = async (values, categoryId) => {
+    const categoryDoc = doc(categoriesCollectionRef, categoryId);
+    await updateDoc(categoryDoc, {
+      name: values.name,
+      //   desciption: values.description,
+      //   imagePath: imagePath,
     });
-  }; */
+  };
 
-  return { addCategory, deleteCategory };
+  return { addCategory, deleteCategory, updateCategory };
 };
 
 export default useCategory;

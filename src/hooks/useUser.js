@@ -9,8 +9,18 @@ const useUser = () => {
     const userDoc = doc(usersCollectionRef, userId);
     deleteDoc(userDoc);
   };
+  const updateUser = async (values, userId, imagePath) => {
+    const data = doc(usersCollectionRef, userId);
+    await updateDoc(data, {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      favourites: values.favourites,
+      imagePath: imagePath,
+    });
+  };
 
-  return { deleteUser };
+  return { deleteUser, updateUser };
 };
 
 export default useUser;

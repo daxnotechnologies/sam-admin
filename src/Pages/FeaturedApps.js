@@ -51,7 +51,7 @@ const FeaturedApps = () => {
                       <FeaturedAppsItems
                         key={item.id}
                         ftAppId={item.id}
-                        ftAppName={item.name}
+                        ftAppName={item.title}
                         isFeatured={item.featured}
                         imgSrc={""}
                       />

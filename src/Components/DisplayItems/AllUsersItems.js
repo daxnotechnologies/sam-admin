@@ -6,7 +6,7 @@ import useUser from "../../hooks/useUser";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const AllUsersItems = ({ userName, userId, imgPath }) => {
+const AllUsersItems = ({ userName, userId, imagePath }) => {
   let navigate = useNavigate();
   const { deleteUser } = useUser();
 
@@ -18,10 +18,10 @@ const AllUsersItems = ({ userName, userId, imgPath }) => {
       <div className="grid grid-cols-12 place-items-center text-center">
         <div className="col-span-7 lg:col-span-9 flex place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center mr-4">
-            {imgPath ? (
+            {imagePath ? (
               !isloading ? (
                 <img
-                  src={imgPath}
+                  src={imagePath}
                   alt=""
                   className="object-cover h-14 w-14 rounded-full"
                 />

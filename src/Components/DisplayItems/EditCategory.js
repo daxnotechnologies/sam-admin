@@ -19,14 +19,18 @@ import Backdrop from "../UI/BackdropModal";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import InputFile from "../UI/InputFile";
+import useFetchDoc from "../../hooks/useFetchDoc";
+import useCategory from "../../hooks/useCategory";
 
 const EditCategory = () => {
   const navigate = useNavigate();
   const { categoryId } = useParams();
-  const [selectedCategory, setSelectedCategory] = useState({});
+  const { docData: selectedCategory, isloading } = useFetchDoc(
+    "categories",
+    categoryId
+  );
+  const { updateCategory } = useCategory();
   const [showModal, setShowModal] = useState(false);
-  //   const [users, setUsers] = useState({});
-  //   const [profilePic, setProfilePic] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -36,42 +40,10 @@ const EditCategory = () => {
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      /* alert(JSON.stringify(values, null, 2)); */
-      updateUser(values);
+      updateCategory(values, categoryId);
       navigate("/dashboard/categories");
     },
   });
-
-  const usersCollectionRef = collection(db, "categories");
-  useEffect(() => {
-    const getCategory = async () => {
-      const data = await getDoc(doc(usersCollectionRef, categoryId));
-      setSelectedCategory(data.data());
-    };
-    getCategory();
-  }, []);
-
-  //   const [imagePath, setImagePath] = useState(formik.values.imagePath);
-
-  //   const uploadIcon = async (setIsUploading) => {
-  //     if (profilePic == null) return;
-  //     const profilePicRef = ref(storage, `profile_images/${categoryId}`);
-  //     uploadBytes(profilePicRef, profilePic);
-  //     const path = await getDownloadURL(profilePicRef);
-  //     console.log(path);
-  //     setImagePath(path);
-  //     setIsUploading(false);
-  //   };
-
-  const updateUser = async (values) => {
-    // console.log(imagePath);
-    const data = doc(usersCollectionRef, categoryId);
-    await updateDoc(data, {
-      name: values.name,
-      //   desciption: values.description,
-      //   imagePath: imagePath,
-    });
-  };
 
   return (
     <>
@@ -81,6 +53,7 @@ const EditCategory = () => {
           className="flex flex-col flex-wrap gap-6 px-6 lg:px-14"
         >
           <h1 className="text-2xl">Edit Category</h1>
+
           <Input
             width="full"
             type="text"
@@ -123,9 +96,9 @@ const EditCategory = () => {
             onClick={() => setShowModal(false)}
           >
             Are you sure you want to update Category details?
-            <div className="self-end">
+            <div className="self-end mt-4">
               <Button type={"submit"} onClick={() => setShowModal(false)}>
-                OK
+                Yes
               </Button>
             </div>
           </Backdrop>

@@ -50,7 +50,7 @@ const AllApps = () => {
                   return (
                     <AllAppsItems
                       key={item.id}
-                      appName={item.name}
+                      appName={item.title}
                       appId={item.id}
                       isFeatured={item.featured}
                       imgSrc={""}

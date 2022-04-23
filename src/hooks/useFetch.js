@@ -20,7 +20,7 @@ const useFetch = (collectionName) => {
           setIsloading(false);
         }
       } catch (error) {
-        console.log(error.message);
+        console.log(error);
       }
     };
     fetchData();
