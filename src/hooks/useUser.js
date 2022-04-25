@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { db } from "../api/firebase-config";
+import { db, storage } from "../api/firebase-config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const useUser = () => {
+  const [imagePath, setImagePath] = useState("");
   const usersCollectionRef = collection(db, "users");
 
   const deleteUser = async (userId) => {
@@ -20,7 +22,16 @@ const useUser = () => {
     });
   };
 
-  return { deleteUser, updateUser };
+  const uploadUserImage = async (appIcon, appId) => {
+    if (appIcon == null) return;
+    const appIconRef = ref(storage, `app_images/${appId}`);
+    uploadBytes(appIconRef, appIcon);
+    let path = await getDownloadURL(appIconRef);
+    setImagePath(path);
+    // console.log(imagePath);
+  };
+
+  return { deleteUser, updateUser, uploadUserImage, imagePath };
 };
 
 export default useUser;

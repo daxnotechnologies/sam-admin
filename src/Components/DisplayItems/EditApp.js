@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
 import Input from "../UI/Input";
 import { useFormik } from "formik";
-
 import { useNavigate, useParams } from "react-router-dom";
 import Card from "../UI/Card";
 import TextArea from "../UI/TextArea";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
-import { db, storage } from "../../api/firebase-config";
 import Button from "../UI/Button";
 import Backdrop from "../UI/BackdropModal";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v4 } from "uuid";
 import InputFile from "../UI/InputFile";
 import useFetchDoc from "../../hooks/useFetchDoc";
 import useApp from "../../hooks/useApp";
@@ -26,7 +14,7 @@ const EditApp = () => {
   const navigate = useNavigate();
   const { appId } = useParams();
   const { docData: selectedApp, isloading } = useFetchDoc("apps", appId);
-  const { updateApp, uploadappIcon } = useApp();
+  const { updateApp, uploadappIcon, imagePath } = useApp();
   const [appIcon, setAppIcon] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -40,22 +28,10 @@ const EditApp = () => {
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      updateApp(values, appId);
+      updateApp(values, appId, imagePath);
       navigate("/dashboard/all-apps");
     },
   });
-
-  const [imagePath, setImagePath] = useState(formik.values.imagePath);
-
-  /* const uploadappIcon = async (setIsUploading) => {
-    if (appIcon == null) return;
-    const appIconRef = ref(storage, `profile_images/${appId}`);
-    uploadBytes(appIconRef, appIcon);
-    const path = await getDownloadURL(appIconRef);
-    console.log(path);
-    setImagePath(path);
-    setIsUploading(false);
-  }; */
 
   return (
     <>
@@ -82,13 +58,10 @@ const EditApp = () => {
                 imageName={appIcon?.name}
                 onChange={(e) => {
                   setAppIcon(e.target.files[0]);
-                  console.log(appIcon);
+                  // console.log(appIcon);
                 }}
                 onUpload={() => {
-                  let icon = uploadappIcon(appIcon, appId);
-                  console.log(icon);
-                  setImagePath(icon);
-                  console.log(imagePath);
+                  uploadappIcon(appIcon, appId);
                 }}
               >
                 Upload

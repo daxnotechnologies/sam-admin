@@ -1,23 +1,10 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
 import Input from "../UI/Input";
 import { useFormik } from "formik";
-
 import { useNavigate, useParams } from "react-router-dom";
 import Card from "../UI/Card";
-import TextArea from "../UI/TextArea";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
-import { db, storage } from "../../api/firebase-config";
 import Button from "../UI/Button";
 import Backdrop from "../UI/BackdropModal";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v4 } from "uuid";
 import InputFile from "../UI/InputFile";
 import useFetchDoc from "../../hooks/useFetchDoc";
 import useUser from "../../hooks/useUser";
@@ -26,7 +13,7 @@ const EditUser = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { docData: selectedUser, isloading } = useFetchDoc("users", userId);
-  const { updateUser } = useUser();
+  const { updateUser, uploadUserImage, imagePath } = useUser();
   const [profilePic, setProfilePic] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -44,18 +31,6 @@ const EditUser = () => {
       navigate("/dashboard/users");
     },
   });
-
-  const [imagePath, setImagePath] = useState(formik.values.imagePath);
-
-  const uploadProfilePic = async (setIsUploading) => {
-    if (profilePic == null) return;
-    const profilePicRef = ref(storage, `profile_images/${userId}`);
-    uploadBytes(profilePicRef, profilePic);
-    const path = await getDownloadURL(profilePicRef);
-    console.log(path);
-    setImagePath(path);
-    setIsUploading(false);
-  };
 
   return (
     <>
@@ -85,7 +60,9 @@ const EditUser = () => {
                 onChange={(e) => {
                   setProfilePic(e.target.files[0]);
                 }}
-                onUpload={uploadProfilePic}
+                onUpload={() => {
+                  uploadUserImage(profilePic, userId);
+                }}
               >
                 Upload
               </InputFile>

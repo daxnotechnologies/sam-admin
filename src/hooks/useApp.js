@@ -19,14 +19,14 @@ const useApp = () => {
     });
   };
 
-  const updateApp = async (values, appId) => {
+  const updateApp = async (values, appId, imagePath) => {
     const data = doc(appsCollectionRef, appId);
     await updateDoc(data, {
       title: values.title,
       category: values.category,
       rating: values.rating,
       description: values.description,
-      imagePath: values.imagePath,
+      imagePath: imagePath,
     });
   };
 
@@ -36,10 +36,9 @@ const useApp = () => {
     uploadBytes(appIconRef, appIcon);
     let path = await getDownloadURL(appIconRef);
     setImagePath(path);
-    return imagePath;
   };
 
-  return { deleteApp, featureApp, updateApp, uploadappIcon };
+  return { deleteApp, featureApp, updateApp, uploadappIcon, imagePath };
 };
 
 export default useApp;
