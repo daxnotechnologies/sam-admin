@@ -1,11 +1,31 @@
 import React, { useState } from "react";
-import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { db, storage } from "../api/firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const useApp = () => {
   const [imagePath, setImagePath] = useState("");
   const appsCollectionRef = collection(db, "apps");
+
+  const addApp = async (values) => {
+    await addDoc(appsCollectionRef, {
+      title: values.title,
+      category: values.category,
+      description: values.description,
+      downloads: values.downloads,
+      icon: values.icon_72,
+      rating: values.rating,
+      screenshots: values.screenshots,
+      shortDescription: values.title,
+      version: values.version,
+    });
+  };
 
   const deleteApp = async (appId) => {
     const appDoc = doc(appsCollectionRef, appId);
@@ -38,7 +58,7 @@ const useApp = () => {
     setImagePath(path);
   };
 
-  return { deleteApp, featureApp, updateApp, uploadappIcon, imagePath };
+  return { addApp, deleteApp, featureApp, updateApp, uploadappIcon, imagePath };
 };
 
 export default useApp;

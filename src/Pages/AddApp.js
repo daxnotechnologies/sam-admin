@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Components/UI/Card";
 import Input from "../Components/UI/Input";
 
@@ -9,32 +9,32 @@ import TextArea from "../Components/UI/TextArea";
 import Backdrop from "../Components/UI/BackdropModal";
 import Button from "../Components/UI/Button";
 import { useNavigate, useParams } from "react-router-dom";
+import useAddApp from "../hooks/useAddApp";
+import useApp from "../hooks/useApp";
 
 const AddApp = () => {
   const navigate = useNavigate();
   const { categoryId } = useParams();
+  const { addApp } = useApp();
 
   const [showModal, setShowModal] = useState(false);
-  const categoriesCollectionRef = collection(db, "categories");
-
-  const addApp = async (values) => {
-    await addDoc(categoriesCollectionRef, values);
-  };
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      description: "",
+      packageId: "",
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      /* alert(JSON.stringify(values, null, 2)); */
-      addApp(values);
+      // alert(JSON.stringify(values, null, 2));
+      console.log(app);
+      addApp(app);
       setShowModal(true);
-
       /* alert("Category Added!"); */
     },
   });
+
+  const { app } = useAddApp(formik.values.packageId);
+
   return (
     <>
       <Card>
@@ -47,20 +47,20 @@ const AddApp = () => {
             <Input
               width="full"
               type="text"
-              name="name"
-              label="App link (Play/App Store)"
+              name="packageId"
+              label="App ID(Play/App Store package_id)"
               onChange={formik.handleChange}
-              value={formik.values.studentName}
+              value={formik.values.packageId}
             />
-            <TextArea
+            {/* <TextArea
               type="text"
               rows={5}
               placeholder="Description"
               name="description"
               onChange={formik.handleChange}
               value={formik.values.requirment}
-            />
-            <input type="file" name="" id="" />
+            /> */}
+            {/* <input type="file" name="" id="" /> */}
             <div>
               <button
                 type="submit"
@@ -73,20 +73,20 @@ const AddApp = () => {
         </div>
       </Card>
       <Backdrop
-        title="Add"
+        title="Add App"
         show={showModal}
         onClick={() => setShowModal(false)}
       >
-        Category Added
-        <div className="self-end">
+        Are you sure you want to add this App?
+        <div className="self-end mt-4">
           <Button
             type={"button"}
             onClick={() => {
               setShowModal(false);
-              navigate("/dashboard");
+              // navigate("/dashboard/all-apps");
             }}
           >
-            OK
+            Yes
           </Button>
         </div>
       </Backdrop>
