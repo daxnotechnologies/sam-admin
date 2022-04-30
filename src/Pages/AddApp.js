@@ -18,6 +18,7 @@ const AddApp = () => {
   const { addApp } = useApp();
 
   const [showModal, setShowModal] = useState(false);
+  const [sendRequest, setSendRequest] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -83,7 +84,7 @@ const AddApp = () => {
             type={"button"}
             onClick={() => {
               setShowModal(false);
-              // navigate("/dashboard/all-apps");
+              navigate("/dashboard/all-apps");
             }}
           >
             Yes

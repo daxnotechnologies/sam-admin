@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   addDoc,
   collection,
@@ -22,8 +22,11 @@ const useApp = () => {
       icon: values.icon_72,
       rating: values.rating,
       screenshots: values.screenshots,
-      shortDescription: values.title,
-      version: values.version,
+      developer: values.developer,
+      playStoreLink: values.market_url,
+      uploadDate: values.created,
+      reviews: [],
+      featured: false,
     });
   };
 
