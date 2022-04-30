@@ -4,10 +4,10 @@ import { db } from "../api/firebase-config";
 
 const useFetch = (collectionName) => {
   const [isloading, setIsloading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
   const [data, setData] = useState([]);
 
   const collectionRef = collection(db, collectionName);
-
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -21,6 +21,7 @@ const useFetch = (collectionName) => {
         }
       } catch (error) {
         console.log(error);
+        setErrorMessage(error.message);
       }
     };
     fetchData();
@@ -29,8 +30,9 @@ const useFetch = (collectionName) => {
       isMounted = false;
     };
   }, [collectionRef]);
+  console.log(data);
 
-  return { data, isloading };
+  return { data, isloading, errorMessage };
 };
 
 export default useFetch;

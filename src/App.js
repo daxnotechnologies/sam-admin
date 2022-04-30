@@ -16,6 +16,7 @@ import FeaturedApps from "./Pages/FeaturedApps";
 import AddApp from "./Pages/AddApp";
 import EditCategory from "./Components/DisplayItems/EditCategory";
 import EditApp from "./Components/DisplayItems/EditApp";
+import UsersAppsRequests from "./Pages/UsersAppsRequests";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route path="/dashboard" element={<MainPage />}>
           <Route index element={<AllCategories />} />
+          <Route
+            path="/dashboard/user-app-requests"
+            element={<UsersAppsRequests />}
+          />
           <Route path="/dashboard/categories" element={<AllCategories />} />
           <Route path="/dashboard/all-apps" element={<AllApps />} />
           <Route path="/dashboard/featured-apps" element={<FeaturedApps />} />

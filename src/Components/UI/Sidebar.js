@@ -26,9 +26,10 @@ const Sidebar = (props) => {
     { key: "2", name: "Add Category", route: "/dashboard/add-category" },
     { key: "3", name: "All Apps", route: "/dashboard/all-apps" },
     { key: "4", name: "Add App", route: "/dashboard/add-app" },
-    { key: "5", name: "Featured Apps", route: "/dashboard/featured-apps" },
-    { key: "6", name: "All Users", route: "/dashboard/users" },
-    { key: "7", name: "Logout", route: "/", logout: true },
+    { key: "6", name: "Featured Apps", route: "/dashboard/featured-apps" },
+    { key: "7", name: "All Users", route: "/dashboard/users" },
+    { key: "5", name: "User Requests", route: "/dashboard/user-app-requests" },
+    { key: "8", name: "Logout", route: "/", logout: true },
   ];
 
   return (
@@ -100,7 +101,7 @@ const Sidebar = (props) => {
 
       {/* Desktop Sidebar */}
       <div className="hidden md:block w-[90%] max-w-[200px] lg:max-w-[280px]  mx-auto">
-        <div className="hidden sm:flex sm:flex-col sm:gap-12 sm:text-3xl sm:min-h-full sm:max-w-72 sm:p-4 lg:p-10">
+        <div className="hidden sm:flex sm:flex-col sm:gap-10 sm:text-3xl sm:min-h-full sm:max-w-72 sm:p-4 lg:p-10">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-4">
               <img
@@ -121,7 +122,7 @@ const Sidebar = (props) => {
               return (
                 <div
                   key={item.key}
-                  className={`mb-3 rounded ease-in-out transition-all duration-150
+                  className={`mb-2 rounded ease-in-out transition-all duration-150
                   hover:bg-slate-100 hover:bg-opacity-20 hover:pl-4
                   ${
                     location.pathname === item.route &&

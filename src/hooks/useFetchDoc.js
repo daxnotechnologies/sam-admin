@@ -5,7 +5,6 @@ import { db } from "../api/firebase-config";
 const useFetchDoc = (collectionName, docId) => {
   const [isloading, setIsloading] = useState(true);
   const [docData, setDocData] = useState([]);
-
   const collectionRef = collection(db, collectionName);
 
   useEffect(() => {
@@ -29,6 +28,7 @@ const useFetchDoc = (collectionName, docId) => {
       isMounted = false;
     };
   }, [collectionRef, docId]);
+  console.log(docData);
 
   return { docData, isloading };
 };
