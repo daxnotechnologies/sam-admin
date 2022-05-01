@@ -18,6 +18,7 @@ const Sidebar = (props) => {
   });
 
   const logout = async () => {
+    localStorage.removeItem("isLoggedIn");
     await signOut(auth);
   };
 
@@ -101,14 +102,25 @@ const Sidebar = (props) => {
 
       {/* Desktop Sidebar */}
       <div className="hidden md:block w-[90%] max-w-[200px] lg:max-w-[280px]  mx-auto">
-        <div className="hidden sm:flex sm:flex-col sm:gap-10 sm:text-3xl sm:min-h-full sm:max-w-72 sm:p-4 lg:p-10">
+        <div className="hidden sm:flex sm:flex-col sm:gap-14 sm:text-3xl sm:min-h-full sm:max-w-72 sm:p-4 lg:p-10">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-4">
-              <img
+              {user?.photoURL ? (
+                <img
+                  src={user?.photoURL}
+                  alt=""
+                  className="object-cover h-24 w-24 rounded-full"
+                />
+              ) : (
+                <div className="h-24 w-24 bg-emerald-200 rounded-full grid place-content-center">
+                  <p className="text-primary font-semibold text-5xl"> AD</p>
+                </div>
+              )}
+              {/* <img
                 src={user?.photoURL || profile}
                 alt="pic"
                 className="object-contain h-24 self-start rounded-xl"
-              />
+              /> */}
               <h2 className="text-3xl text-white break-all">
                 {user?.displayName || "Admin"}
               </h2>
@@ -122,7 +134,7 @@ const Sidebar = (props) => {
               return (
                 <div
                   key={item.key}
-                  className={`mb-2 rounded ease-in-out transition-all duration-150
+                  className={`mb-4 rounded ease-in-out transition-all duration-150
                   hover:bg-slate-100 hover:bg-opacity-20 hover:pl-4
                   ${
                     location.pathname === item.route &&

@@ -15,14 +15,14 @@ const UsersAppsRequests = () => {
     <Card>
       <div className="w-[90%] max-w-5xl h-full mx-auto">
         <header className="flex flex-col gap-2 justify-start mb-14 ">
-          <h1 className="text-4xl">All Users</h1>
+          <h1 className="text-4xl">All Requests</h1>
           <p className="text-gray-400">{date}</p>
         </header>
         {/* Table */}
         {/* Header */}
         <div className="flex flex-col px-0">
           <div className="flex items-center justify-between">
-            <p className="text-lg font-bold text-secondary">Users</p>
+            <p className="text-lg font-bold text-secondary">User Requests</p>
             <svg
               className="fill-gray-400 object-contain h-10 cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"

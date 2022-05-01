@@ -10,7 +10,7 @@ const useFetchDoc = (collectionName, docId) => {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchDoc = async () => {
+    const fetchDoc = async (docId) => {
       try {
         const fetchedDocdata = await getDoc(doc(collectionRef, docId));
 
@@ -20,15 +20,16 @@ const useFetchDoc = (collectionName, docId) => {
         }
       } catch (error) {
         console.log(error.message);
+        // alert(error);
       }
     };
-    fetchDoc();
+    fetchDoc(docId);
 
     return () => {
       isMounted = false;
     };
   }, [collectionRef, docId]);
-  console.log(docData);
+  // console.log(docData);
 
   return { docData, isloading };
 };

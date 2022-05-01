@@ -30,7 +30,7 @@ const useAddApp = (packageId) => {
         if (isMounted === true) {
           setApp(response.data);
         }
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error(error);
       }

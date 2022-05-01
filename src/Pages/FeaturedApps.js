@@ -53,7 +53,7 @@ const FeaturedApps = () => {
                         ftAppId={item.id}
                         ftAppName={item.title}
                         isFeatured={item.featured}
-                        imgSrc={""}
+                        icon={item.icon}
                       />
                     );
                   }

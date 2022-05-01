@@ -8,17 +8,34 @@ import { db } from "../api/firebase-config";
 import TextArea from "../Components/UI/TextArea";
 import Backdrop from "../Components/UI/BackdropModal";
 import Button from "../Components/UI/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAddApp from "../hooks/useAddApp";
 import useApp from "../hooks/useApp";
+import axios from "axios";
 
 const AddApp = () => {
+  useEffect(() => {
+    axios
+      .get(" https://data.42matters.com/api/v2.0/android/apps/lookup.json", {
+        params: {
+          access_token: "8be68df377efc75f6a9714b42bd6cd1bbe29fae6",
+          p: "com.king.candycrushsaga",
+        },
+      })
+      .then((response) => {
+        const appdata = response.data;
+        console.log(appdata);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   const navigate = useNavigate();
-  const { categoryId } = useParams();
-  const { addApp } = useApp();
+
+  const { getApp, addApp, app } = useApp();
 
   const [showModal, setShowModal] = useState(false);
-  const [sendRequest, setSendRequest] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -28,13 +45,11 @@ const AddApp = () => {
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
       console.log(app);
-      addApp(app);
-      setShowModal(true);
+      // addApp(app);
+      // setShowModal(true);
       /* alert("Category Added!"); */
     },
   });
-
-  const { app } = useAddApp(formik.values.packageId);
 
   return (
     <>
@@ -53,44 +68,41 @@ const AddApp = () => {
               onChange={formik.handleChange}
               value={formik.values.packageId}
             />
-            {/* <TextArea
-              type="text"
-              rows={5}
-              placeholder="Description"
-              name="description"
-              onChange={formik.handleChange}
-              value={formik.values.requirment}
-            /> */}
-            {/* <input type="file" name="" id="" /> */}
             <div>
               <button
-                type="submit"
+                onClick={() => {
+                  getApp(formik.values.packageId);
+                  console.log(app);
+                  setShowModal(true);
+                }}
+                type="button"
                 className="flex bg-green-500 text-white rounded-lg mx-auto  px-8 py-3 md:px-10 md:py-3 md:ml-auto md:mx-0"
               >
                 Add App
               </button>
             </div>
+            <Backdrop
+              title="Add App"
+              show={showModal}
+              onClick={() => setShowModal(false)}
+            >
+              Are you sure you want to add this App?
+              <div className="self-end mt-4">
+                <Button
+                  type={"button"}
+                  onClick={() => {
+                    addApp(app);
+                    setShowModal(false);
+                    navigate("/dashboard/all-apps");
+                  }}
+                >
+                  Yes
+                </Button>
+              </div>
+            </Backdrop>
           </form>
         </div>
       </Card>
-      <Backdrop
-        title="Add App"
-        show={showModal}
-        onClick={() => setShowModal(false)}
-      >
-        Are you sure you want to add this App?
-        <div className="self-end mt-4">
-          <Button
-            type={"button"}
-            onClick={() => {
-              setShowModal(false);
-              navigate("/dashboard/all-apps");
-            }}
-          >
-            Yes
-          </Button>
-        </div>
-      </Backdrop>
     </>
   );
 };

@@ -48,6 +48,7 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
             alt
             onClick={() => {
               setShowModal(true);
+
               // alert(categoryName + " with Id " + categoryId + " deleted");
             }}
           >
@@ -67,6 +68,8 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
             onClick={() => {
               deleteCategory(categoryId);
               setShowModal(false);
+              navigate("/dashboard");
+              // forceUpdate()
             }}
           >
             Yes

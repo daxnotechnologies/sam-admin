@@ -19,48 +19,35 @@ import EditApp from "./Components/DisplayItems/EditApp";
 import UsersAppsRequests from "./Pages/UsersAppsRequests";
 
 function App() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
   return (
     <>
       <Routes>
         <Route exact path="/" element={<Login />} />
-        <Route path="/dashboard" element={<MainPage />}>
-          <Route index element={<AllCategories />} />
-          <Route
-            path="/dashboard/user-app-requests"
-            element={<UsersAppsRequests />}
-          />
-          <Route path="/dashboard/categories" element={<AllCategories />} />
-          <Route path="/dashboard/all-apps" element={<AllApps />} />
-          <Route path="/dashboard/featured-apps" element={<FeaturedApps />} />
+        {isLoggedIn && (
+          <Route path="/dashboard" element={<MainPage />}>
+            <Route index element={<AllCategories />} />
+            <Route
+              path="/dashboard/user-app-requests"
+              element={<UsersAppsRequests />}
+            />
+            <Route path="/dashboard/categories" element={<AllCategories />} />
+            <Route path="/dashboard/all-apps" element={<AllApps />} />
+            <Route path="/dashboard/featured-apps" element={<FeaturedApps />} />
 
-          <Route path="/dashboard/users" element={<Users />} />
-          <Route path="/dashboard/add-category" element={<AddCategory />} />
-          <Route path="/dashboard/add-app" element={<AddApp />} />
+            <Route path="/dashboard/users" element={<Users />} />
+            <Route path="/dashboard/add-category" element={<AddCategory />} />
+            <Route path="/dashboard/add-app" element={<AddApp />} />
 
-          <Route path="/dashboard/edit-app/:appId" element={<EditApp />} />
-          <Route path="/dashboard/edit-user/:userId" element={<EditUser />} />
-          <Route
-            path="/dashboard/edit-category/:categoryId"
-            element={<EditCategory />}
-          />
-
-          {/* <Route path="/dashboard/tutor-details" element={<TutorDetails />} />
-          <Route path="/dashboard/add-job" element={<AddJob />} />
-          <Route path="/dashboard/jobs-applied" element={<JobsApplied />} />
-          <Route path="/dashboard/jobs-details" element={<JobsDetails />} />
-          <Route path="/dashboard/feedback" element={<Feedback />} /> */}
-          {/* <Route path="/dashboard/groups" element={<Groups />} />
-          <Route
-            path="/dashboard/edit-group/:groupId"
-            element={<EditGroup />}
-          />
-          <Route path="/dashboard/transactions" element={<Transactions />} />
-          <Route
-            path="/dashboard/edit-transaction/:transactionId"
-            element={<EditTransaction />}
-          />
-          <Route path="/dashboard/settings" element={<Settings />} /> */}
-        </Route>
+            <Route path="/dashboard/edit-app/:appId" element={<EditApp />} />
+            <Route path="/dashboard/edit-user/:userId" element={<EditUser />} />
+            <Route
+              path="/dashboard/edit-category/:categoryId"
+              element={<EditCategory />}
+            />
+          </Route>
+        )}
+        {/* <Route exact path="/*" element={<> Error 404 | Page Not found </>} /> */}
       </Routes>
     </>
   );

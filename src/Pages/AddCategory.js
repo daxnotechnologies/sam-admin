@@ -40,7 +40,7 @@ const AddCategory = () => {
               onChange={formik.handleChange}
               value={formik.values.studentName}
             />
-            <TextArea
+            {/* <TextArea
               type="text"
               rows={5}
               placeholder="Description"
@@ -48,7 +48,7 @@ const AddCategory = () => {
               onChange={formik.handleChange}
               value={formik.values.requirment}
             />
-            <input type="file" name="" id="" />
+            <input type="file" name="" id="" /> */}
             <div>
               <button
                 type="submit"

@@ -6,7 +6,7 @@ import useApp from "../../hooks/useApp";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId, isFeatured }) => {
+const FeaturedAppsItems = ({ icon, ftAppName, ftAppId, isFeatured }) => {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
@@ -14,28 +14,20 @@ const FeaturedAppsItems = ({ imgSrc, ftAppName, ftAppId, isFeatured }) => {
 
   const { deleteApp, featureApp } = useApp();
 
-  /* const deleteApp = async (id) => {
-    const ftAppDoc = doc(db, "featuredApps", id);
-    deleteDoc(ftAppDoc);
-  };
-
-  const featureApp = async () => {
-    const data = doc(db, "apps", ftAppId);
-    await updateDoc(data, {
-      featured: removefeatureApp,
-    });
-  }; */
-
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
         <div className="col-span-6 lg:col-span-8 flex gap-4 place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center">
-            <img
-              src={imgSrc}
-              alt=""
-              className="object-cover h-12  rounded-full"
-            />
+            {icon ? (
+              <img
+                src={icon}
+                alt=""
+                className="object-cover h-14 w-14 rounded-full"
+              />
+            ) : (
+              <div className="h-14 w-14 bg-slate-300 rounded-full" />
+            )}
           </div>
 
           <div className="flex flex-col gap-2">

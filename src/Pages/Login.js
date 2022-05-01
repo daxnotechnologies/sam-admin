@@ -38,6 +38,7 @@ const Login = () => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
       console.log(user);
+      localStorage.setItem("isLoggedIn", true);
       navigate("/dashboard");
     } catch (error) {
       console.log(error.message);
@@ -46,9 +47,9 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-200 w-[100vw] h-[100vh] pt-[20vh]">
+    <div className="bg-primaryL w-[100vw] h-[100vh] pt-[25vh]">
       <div
-        className=" p-6 w-[80%] max-w-md mx-auto  
+        className=" p-8 w-[80%] max-w-md mx-auto  
         border rounded-md  bg-white
         shadow-lg drop-shadow-xl "
       >
@@ -56,7 +57,7 @@ const Login = () => {
           <h1 className="text-secondary text-2xl font-bold mx-auto mb-4">
             Login
           </h1>
-          <div className="flex flex-col gap-4 mb-6">
+          <div className="flex flex-col gap-4 mb-8">
             <div>
               <Input
                 type="text"

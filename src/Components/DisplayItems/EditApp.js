@@ -14,7 +14,7 @@ const EditApp = () => {
   const navigate = useNavigate();
   const { appId } = useParams();
   const { docData: selectedApp, isloading } = useFetchDoc("apps", appId);
-  const { updateApp, uploadappIcon, imagePath } = useApp();
+  const { updateApp, uploadappIcon, icon } = useApp();
   const [appIcon, setAppIcon] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -24,11 +24,11 @@ const EditApp = () => {
       category: selectedApp.category,
       rating: selectedApp.rating,
       description: selectedApp.description,
-      imagePath: selectedApp.imagePath,
+      icon: selectedApp.icon,
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      updateApp(values, appId, imagePath);
+      updateApp(values, appId, icon);
       navigate("/dashboard/all-apps");
     },
   });
@@ -44,17 +44,18 @@ const EditApp = () => {
           ${isloading ? "opacity-50" : "opacity-100"}`}
           >
             <div className="flex items-center gap-6 mr-4">
-              {imagePath || formik.values.imagePath ? (
+              {icon || formik.values.icon ? (
                 <img
-                  src={imagePath || formik.values.imagePath || ""}
+                  src={icon || formik.values.icon || ""}
                   alt=""
                   className="object-cover h-14 w-14 rounded-full"
                 />
               ) : (
                 <div className="h-14 w-14 bg-slate-300 rounded-full" />
               )}
-              <InputFile
-                name="imagePath"
+              {/* <InputFile
+                disabled
+                name="icon"
                 imageName={appIcon?.name}
                 onChange={(e) => {
                   setAppIcon(e.target.files[0]);
@@ -65,7 +66,7 @@ const EditApp = () => {
                 }}
               >
                 Upload
-              </InputFile>
+              </InputFile> */}
             </div>
             <Input
               width="full"

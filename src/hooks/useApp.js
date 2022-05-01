@@ -8,10 +8,49 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../api/firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import axios from "axios";
 
 const useApp = () => {
   const [imagePath, setImagePath] = useState("");
+  const [app, setApp] = useState({});
   const appsCollectionRef = collection(db, "apps");
+
+  /* const getApp = async (packageId) => {
+    try {
+      const response = await axios.get(
+        " https://data.42matters.com/api/v2.0/android/apps/lookup.json",
+        {
+          params: {
+            access_token: "8be68df377efc75f6a9714b42bd6cd1bbe29fae6",
+            p: packageId,
+          },
+        }
+      );
+      const appdata = await response.data;
+      setApp(appdata);
+      // console.log(response.data);
+      return appdata;
+    } catch (error) {
+      console.error(error);
+    }
+  }; */
+  const getApp = (packageId) => {
+    axios
+      .get(" https://data.42matters.com/api/v2.0/android/apps/lookup.json", {
+        params: {
+          access_token: "8be68df377efc75f6a9714b42bd6cd1bbe29fae6",
+          p: packageId,
+        },
+      })
+      .then((response) => {
+        const appdata = response.data;
+        console.log(appdata);
+        setApp(appdata);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const addApp = async (values) => {
     await addDoc(appsCollectionRef, {
@@ -61,7 +100,16 @@ const useApp = () => {
     setImagePath(path);
   };
 
-  return { addApp, deleteApp, featureApp, updateApp, uploadappIcon, imagePath };
+  return {
+    getApp,
+    addApp,
+    deleteApp,
+    featureApp,
+    updateApp,
+    uploadappIcon,
+    imagePath,
+    app,
+  };
 };
 
 export default useApp;

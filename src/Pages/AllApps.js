@@ -53,7 +53,7 @@ const AllApps = () => {
                       appName={item.title}
                       appId={item.id}
                       isFeatured={item.featured}
-                      imgSrc={""}
+                      icon={item.icon}
                     />
                   );
                 })}

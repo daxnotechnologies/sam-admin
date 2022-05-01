@@ -6,7 +6,7 @@ import useApp from "../../hooks/useApp";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const AllAppsItems = ({ appName, imgSrc, appId, isFeatured }) => {
+const AllAppsItems = ({ appName, icon, appId, isFeatured }) => {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
@@ -19,13 +19,16 @@ const AllAppsItems = ({ appName, imgSrc, appId, isFeatured }) => {
       <div className="grid grid-cols-12 place-items-center text-center">
         <div className="col-span-4 lg:col-span-7 flex gap-4 place-self-start text-left font-semibold text-primary">
           <div className="grid place-items-center">
-            <img
-              src={imgSrc}
-              alt=""
-              className="object-cover h-12  rounded-full"
-            />
+            {icon ? (
+              <img
+                src={icon}
+                alt=""
+                className="object-cover h-14 w-14 rounded-full"
+              />
+            ) : (
+              <div className="h-14 w-14 bg-slate-300 rounded-full" />
+            )}
           </div>
-
           <div className="flex flex-col gap-2">
             <p>{appName}</p>
             <div className="flex items-center gap-2">
