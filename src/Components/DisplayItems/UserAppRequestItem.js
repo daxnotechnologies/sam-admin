@@ -34,7 +34,7 @@ const UserAppRequestItem = ({ appRequestId, userId, appLink, isApproved }) => {
 
           <div className="flex flex-col gap-2">
             <p>
-              {app.title} {selectedUser?.username}
+              {app.title} by {selectedUser?.username}
             </p>
             <div className="flex items-center gap-2">
               <p className=" text-[#404852] text-[12px]">{"5:12 pm"}</p>
