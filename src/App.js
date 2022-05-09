@@ -24,7 +24,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Login />} />
-        {isLoggedIn && (
+        {true && (
           <Route path="/dashboard" element={<MainPage />}>
             <Route index element={<AllCategories />} />
             <Route
