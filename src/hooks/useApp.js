@@ -38,7 +38,7 @@ const useApp = () => {
     axios
       .get(" https://data.42matters.com/api/v2.0/android/apps/lookup.json", {
         params: {
-          access_token: "8be68df377efc75f6a9714b42bd6cd1bbe29fae6",
+          access_token: "d4b6fd46d2a8b47a2043151688f8b950747d2be9",
           p: packageId,
         },
       })

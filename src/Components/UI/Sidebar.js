@@ -29,7 +29,7 @@ const Sidebar = (props) => {
     { key: "4", name: "Add App", route: "/dashboard/add-app" },
     { key: "6", name: "Featured Apps", route: "/dashboard/featured-apps" },
     { key: "7", name: "All Users", route: "/dashboard/users" },
-    { key: "5", name: "User Requests", route: "/dashboard/user-app-requests" },
+    // { key: "5", name: "User Requests", route: "/dashboard/user-app-requests" },
     { key: "8", name: "Logout", route: "/", logout: true },
   ];
 
