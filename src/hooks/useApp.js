@@ -64,6 +64,7 @@ const useApp = () => {
       developer: values.developer,
       playStoreLink: values.market_url,
       uploadDate: values.created,
+      promo_video: values.promo_video,
       reviews: [],
       featured: false,
     });
