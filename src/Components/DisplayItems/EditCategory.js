@@ -63,14 +63,14 @@ const EditCategory = () => {
             value={formik.values.name}
           />
 
-          <TextArea
+          {/* <TextArea
             rows={4}
             type="text"
             label="Description"
             name="description"
             onChange={formik.handleChange}
             value={formik.values.description}
-          />
+          /> */}
 
           <div className="flex justify-end gap-8 mt-4">
             <Button
@@ -84,7 +84,7 @@ const EditCategory = () => {
             <Button
               type="button"
               onClick={() => {
-                navigate("/dashboard/users");
+                navigate("/dashboard");
               }}
             >
               <div className="text-base p-1">Cancel</div>
