@@ -14,23 +14,6 @@ import useApp from "../hooks/useApp";
 import axios from "axios";
 
 const AddApp = () => {
-  useEffect(() => {
-    axios
-      .get(" https://data.42matters.com/api/v2.0/android/apps/lookup.json", {
-        params: {
-          access_token: "8be68df377efc75f6a9714b42bd6cd1bbe29fae6",
-          p: "com.king.candycrushsaga",
-        },
-      })
-      .then((response) => {
-        const appdata = response.data;
-        console.log(appdata);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   const navigate = useNavigate();
 
   const { getApp, addApp, app } = useApp();
@@ -43,11 +26,9 @@ const AddApp = () => {
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
-      console.log(app);
-      // addApp(app);
-      // setShowModal(true);
-      /* alert("Category Added!"); */
+      addApp(app);
+      setShowModal(false);
+      navigate("/dashboard/all-apps");
     },
   });
 
@@ -88,16 +69,7 @@ const AddApp = () => {
             >
               Are you sure you want to add this App?
               <div className="self-end mt-4">
-                <Button
-                  type={"button"}
-                  onClick={() => {
-                    addApp(app);
-                    setShowModal(false);
-                    navigate("/dashboard/all-apps");
-                  }}
-                >
-                  Yes
-                </Button>
+                <Button type={"submit"}>Yes</Button>
               </div>
             </Backdrop>
           </form>

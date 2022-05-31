@@ -6,7 +6,14 @@ import useApp from "../../hooks/useApp";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const FeaturedAppsItems = ({ icon, ftAppName, ftAppId, isFeatured }) => {
+const FeaturedAppsItems = ({
+  icon,
+  ftAppName,
+  ftAppId,
+  isFeatured,
+  check,
+  setCheck,
+}) => {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
@@ -75,6 +82,7 @@ const FeaturedAppsItems = ({ icon, ftAppName, ftAppId, isFeatured }) => {
             type={"button"}
             onClick={() => {
               deleteApp(ftAppId);
+              setCheck(!check);
               setShowDeleteModal(false);
             }}
           >
@@ -93,6 +101,7 @@ const FeaturedAppsItems = ({ icon, ftAppName, ftAppId, isFeatured }) => {
             type={"button"}
             onClick={() => {
               featureApp(ftAppId, removefeatureApp);
+              setCheck(!check);
               setShowFeatureModal(false);
             }}
           >

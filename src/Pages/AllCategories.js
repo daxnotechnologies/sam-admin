@@ -8,7 +8,11 @@ import useFetch from "../hooks/useFetch";
 import currentDate from "../utility/currentDate";
 
 const AllCategories = () => {
-  const { data: allCategories, isloading } = useFetch("categories");
+  const [check, setCheck] = useState(false);
+
+  const { data: allCategories, isloading } = useFetch("categories", check);
+
+  console.log(allCategories);
   const date = currentDate();
 
   return (
@@ -52,6 +56,8 @@ const AllCategories = () => {
                       key={item.id}
                       categoryName={item.name}
                       categoryId={item.id}
+                      check={check}
+                      setCheck={setCheck}
                     />
                   );
                 })}

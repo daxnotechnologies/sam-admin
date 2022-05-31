@@ -1,28 +1,30 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../api/firebase-config";
 
-const useFetch = (collectionName, rerender) => {
+const useFetch = (collectionName, check) => {
   const [isloading, setIsloading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [data, setData] = useState([]);
-  const collectionRef = collection(db, collectionName);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const fetchedData = await getDocs(collectionRef);
-      setData(fetchedData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setIsloading(false);
-    } catch (error) {
-      console.log(error);
-      setErrorMessage(error.message);
-      alert(error);
-    }
-  }, [collectionRef]);
 
   useEffect(() => {
+    const collectionRef = collection(db, collectionName);
+
+    const fetchData = async () => {
+      setIsloading(true);
+      try {
+        const fetchedData = await getDocs(collectionRef);
+        setData(fetchedData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setIsloading(false);
+      } catch (error) {
+        console.log(error);
+        setErrorMessage(error.message);
+        alert(error);
+      }
+    };
+
     fetchData();
-  }, [fetchData, rerender]);
+  }, [check]);
   // console.log(data);
 
   return { data, isloading, errorMessage };

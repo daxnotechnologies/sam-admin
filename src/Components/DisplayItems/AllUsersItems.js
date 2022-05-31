@@ -6,7 +6,7 @@ import useUser from "../../hooks/useUser";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const AllUsersItems = ({ userName, userId, imagePath }) => {
+const AllUsersItems = ({ userName, userId, imagePath, check, setCheck }) => {
   let navigate = useNavigate();
   const { deleteUser } = useUser();
 
@@ -76,6 +76,7 @@ const AllUsersItems = ({ userName, userId, imagePath }) => {
             type={"button"}
             onClick={() => {
               deleteUser(userId);
+              setCheck(!check);
               setShowModal(false);
             }}
           >

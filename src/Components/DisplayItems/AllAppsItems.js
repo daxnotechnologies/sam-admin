@@ -6,7 +6,14 @@ import useApp from "../../hooks/useApp";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const AllAppsItems = ({ appName, icon, appId, isFeatured }) => {
+const AllAppsItems = ({
+  appName,
+  icon,
+  appId,
+  isFeatured,
+  check,
+  setCheck,
+}) => {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
@@ -69,7 +76,6 @@ const AllAppsItems = ({ appName, icon, appId, isFeatured }) => {
             alt
             onClick={() => {
               setShowDeleteModal(true);
-              // alert(categoryName + " with Id " + categoryId + " deleted");
             }}
           >
             Delete
@@ -87,6 +93,7 @@ const AllAppsItems = ({ appName, icon, appId, isFeatured }) => {
             type={"button"}
             onClick={() => {
               deleteApp(appId);
+              setCheck(!check);
               setShowDeleteModal(false);
             }}
           >
@@ -105,6 +112,7 @@ const AllAppsItems = ({ appName, icon, appId, isFeatured }) => {
             type={"button"}
             onClick={() => {
               featureApp(appId, featured);
+              setCheck(!check);
               setShowFeatureModal(false);
             }}
           >

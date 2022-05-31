@@ -8,7 +8,9 @@ import useFetch from "../hooks/useFetch";
 import currentDate from "../utility/currentDate";
 
 const AllApps = () => {
-  const { data: allApps, isloading } = useFetch("apps");
+  const [check, setCheck] = useState(false);
+  const { data: allApps, isloading } = useFetch("apps", check);
+  console.log(allApps);
   const date = currentDate();
 
   return (
@@ -54,6 +56,8 @@ const AllApps = () => {
                       appId={item.id}
                       isFeatured={item.featured}
                       icon={item.icon}
+                      check={check}
+                      setCheck={setCheck}
                     />
                   );
                 })}

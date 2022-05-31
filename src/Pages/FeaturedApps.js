@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Card from "../Components/UI/Card";
 import FeaturedAppsItems from "../Components/DisplayItems/FeaturedAppsItems";
@@ -7,7 +7,10 @@ import useFetch from "../hooks/useFetch";
 import currentDate from "../utility/currentDate";
 
 const FeaturedApps = () => {
-  const { data: allApps, isloading } = useFetch("apps");
+  const [check, setCheck] = useState(false);
+
+  const { data: allApps, isloading } = useFetch("apps", check);
+  console.log(allApps);
   const date = currentDate();
 
   return (
@@ -54,6 +57,8 @@ const FeaturedApps = () => {
                         ftAppName={item.title}
                         isFeatured={item.featured}
                         icon={item.icon}
+                        check={check}
+                        setCheck={setCheck}
                       />
                     );
                   }

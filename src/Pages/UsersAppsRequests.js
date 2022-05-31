@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../Components/UI/Card";
 import AllUsersItems from "../Components/DisplayItems/AllUsersItems";
 import Spinner from "../Components/UI/Spinner";
@@ -8,7 +8,9 @@ import { userAppRequest } from "../Components/DummyData/userAppRequests";
 import UserAppRequestItem from "../Components/DisplayItems/UserAppRequestItem";
 
 const UsersAppsRequests = () => {
-  const { data: requests, isloading } = useFetch("app-requests");
+  const [check, setCheck] = useState(false);
+
+  const { data: requests, isloading } = useFetch("app-requests", check);
   const date = currentDate();
 
   return (
@@ -54,6 +56,8 @@ const UsersAppsRequests = () => {
                       userId={item.userId}
                       appLink={item.appLink}
                       isApproved={item.approved}
+                      check={check}
+                      setCheck={setCheck}
                     />
                   );
                 })}

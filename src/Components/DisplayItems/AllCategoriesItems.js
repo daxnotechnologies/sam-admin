@@ -6,7 +6,7 @@ import useCategory from "../../hooks/useCategory";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
 
-const AllCategoriesItems = ({ categoryName, categoryId }) => {
+const AllCategoriesItems = ({ categoryName, categoryId, check, setCheck }) => {
   const navigate = useNavigate();
   const { deleteCategory } = useCategory();
   const [showModal, setShowModal] = useState(false);
@@ -22,7 +22,6 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
               className="object-cover h-12  rounded-full"
             /> */}
           </div>
-
           <div className="flex flex-col gap-2">
             <p>{categoryName}</p>
             <div className="flex items-center gap-2">
@@ -48,7 +47,6 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
             alt
             onClick={() => {
               setShowModal(true);
-
               // alert(categoryName + " with Id " + categoryId + " deleted");
             }}
           >
@@ -67,6 +65,7 @@ const AllCategoriesItems = ({ categoryName, categoryId }) => {
             type={"button"}
             onClick={() => {
               deleteCategory(categoryId);
+              setCheck(!check);
               setShowModal(false);
               navigate("/dashboard");
               // forceUpdate()

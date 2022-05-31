@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../Components/UI/Card";
 import AllUsersItems from "../Components/DisplayItems/AllUsersItems";
 import Spinner from "../Components/UI/Spinner";
@@ -6,9 +6,10 @@ import useFetch from "../hooks/useFetch";
 import currentDate from "../utility/currentDate";
 
 const Users = () => {
-  const { data: allUsers, isloading } = useFetch("users");
+  const [check, setCheck] = useState(false);
+  const { data: allUsers, isloading } = useFetch("users", check);
   const date = currentDate();
-
+  console.log(allUsers);
   return (
     <Card>
       <div className="w-[90%] max-w-5xl h-full mx-auto">
@@ -51,6 +52,8 @@ const Users = () => {
                       userName={item.name}
                       userId={item.id}
                       imagePath={item.imagePath}
+                      check={check}
+                      setCheck={setCheck}
                     />
                   );
                 })}
