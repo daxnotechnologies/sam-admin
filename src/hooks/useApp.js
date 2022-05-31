@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "../api/firebase-config";
@@ -64,6 +65,7 @@ const useApp = () => {
       developer: values.developer,
       playStoreLink: values.market_url,
       uploadDate: values.created,
+      createdAt: serverTimestamp(),
       promo_video: values.promo_video,
       reviews: [],
       featured: false,
