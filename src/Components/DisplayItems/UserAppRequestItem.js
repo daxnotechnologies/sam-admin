@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAddApp from "../../hooks/useAddApp";
@@ -9,6 +10,7 @@ import useUser from "../../hooks/useUser";
 import extractAppId from "../../utility/extractAppId";
 import Backdrop from "../UI/BackdropModal";
 import Button from "../UI/Button";
+import Spinner from "../UI/Spinner";
 
 const UserAppRequestItem = ({
   appRequestId,
@@ -32,6 +34,35 @@ const UserAppRequestItem = ({
   const [showFeatureModal, setShowFeatureModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [approved, setApproved] = useState(isApproved);
+  const [loading, setLoading] = useState(true);
+  const [color, setColor] = useState(false);
+
+  useEffect(() => {
+    const getColor = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get("https://api.imagga.com/v2/colors", {
+          params: {
+            image_url: app?.icon,
+          },
+          headers: {
+            Authorization:
+              "Basic YWNjXzU1MTAyMjQzMmU4YWVhOTplMWQwOGM2ZDRkOGYxNmI4NDEzNjUwOWVjMDNkZTZmZg==",
+          },
+        });
+        const color =
+          response.data.result.colors.image_colors[0]
+            .closest_palette_color_html_code;
+        console.log(response.data.result.colors);
+        console.log(color);
+        setColor(color);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getColor();
+  }, [app]);
 
   useEffect(() => {
     if (userId) {
@@ -94,6 +125,7 @@ const UserAppRequestItem = ({
             alt
             onClick={() => {
               setShowDeleteModal(true);
+              setLoading(true);
               // alert(categoryName + " with Id " + categoryId + " deleted");
             }}
           >
@@ -104,7 +136,9 @@ const UserAppRequestItem = ({
       <Backdrop
         title="Dismiss!"
         show={showDeleteModal}
-        onClick={() => setShowDeleteModal(false)}
+        onClick={() => {
+          setShowDeleteModal(false);
+        }}
       >
         Are you sure you want to Dismiss this request?
         <div className="self-end mt-4">
@@ -125,21 +159,29 @@ const UserAppRequestItem = ({
         show={showFeatureModal}
         onClick={() => setShowFeatureModal(false)}
       >
-        Are you sure you want to Approve this App?
-        <div className="self-end mt-4">
-          <Button
-            type={"button"}
-            onClick={() => {
-              addApp(app);
-              updateAppRequest(appRequestId);
-              setCheck(!check);
-              setApproved(true);
-              setShowFeatureModal(false);
-            }}
-          >
-            Yes
-          </Button>
-        </div>
+        {loading ? (
+          <div className="pt-6 pb-8 grid place-content-center">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            Are you sure you want to Approve this App?
+            <div className="self-end mt-4">
+              <Button
+                type={"button"}
+                onClick={() => {
+                  addApp(app);
+                  updateAppRequest(appRequestId);
+                  setCheck(!check);
+                  setApproved(true);
+                  setShowFeatureModal(false);
+                }}
+              >
+                Yes
+              </Button>
+            </div>
+          </>
+        )}
       </Backdrop>
     </>
   );

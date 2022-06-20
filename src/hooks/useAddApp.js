@@ -22,7 +22,7 @@ const useAddApp = (packageId) => {
           " https://data.42matters.com/api/v2.0/android/apps/lookup.json",
           {
             params: {
-              access_token: "ea6b1ecb080ff93fb4b100a488ea4d29abc6a51a",
+              access_token: "01a5982b2b15e31919f4c43c1649a0cdc61b5a81",
               p: packageId,
             },
           }

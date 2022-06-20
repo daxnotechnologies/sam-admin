@@ -13,33 +13,35 @@ import axios from "axios";
 
 const useApp = () => {
   const [imagePath, setImagePath] = useState("");
+  const [color, setColor] = useState("");
   const [app, setApp] = useState({});
   const appsCollectionRef = collection(db, "apps");
 
-  /* const getApp = async (packageId) => {
+  const getColor = async (imagePath) => {
     try {
-      const response = await axios.get(
-        " https://data.42matters.com/api/v2.0/android/apps/lookup.json",
-        {
-          params: {
-            access_token: "8be68df377efc75f6a9714b42bd6cd1bbe29fae6",
-            p: packageId,
-          },
-        }
-      );
-      const appdata = await response.data;
-      setApp(appdata);
-      // console.log(response.data);
-      return appdata;
+      const response = await axios.get("https://api.imagga.com/v2/colors", {
+        params: {
+          image_url: { imagePath },
+        },
+        headers: {
+          Authorization:
+            "Basic YWNjXzU1MTAyMjQzMmU4YWVhOTplMWQwOGM2ZDRkOGYxNmI4NDEzNjUwOWVjMDNkZTZmZg==",
+        },
+      });
+      const color =
+        response.result.colors.background_colors[0]
+          .closest_palette_color_html_code;
+      console.log(color);
+      setColor(color);
     } catch (error) {
       console.error(error);
     }
-  }; */
+  };
   const getApp = (packageId) => {
     axios
       .get(" https://data.42matters.com/api/v2.0/android/apps/lookup.json", {
         params: {
-          access_token: "ea6b1ecb080ff93fb4b100a488ea4d29abc6a51a",
+          access_token: "01a5982b2b15e31919f4c43c1649a0cdc61b5a81",
           p: packageId,
         },
       })
@@ -53,10 +55,11 @@ const useApp = () => {
       });
   };
 
-  const addApp = async (values) => {
+  const addApp = async (values, color) => {
     await addDoc(appsCollectionRef, {
       title: values.title,
       category: values.category,
+      color: color,
       description: values.description,
       downloads: values.downloads,
       icon: values.icon_72,
@@ -111,6 +114,8 @@ const useApp = () => {
     uploadappIcon,
     imagePath,
     app,
+    getColor,
+    color,
   };
 };
 
