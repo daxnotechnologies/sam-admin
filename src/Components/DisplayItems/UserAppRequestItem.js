@@ -53,9 +53,10 @@ const UserAppRequestItem = ({
         const color =
           response.data.result.colors.image_colors[0]
             .closest_palette_color_html_code;
+        const colorWithoutHash = color.substring(color.indexOf("#") + 1);
         console.log(response.data.result.colors);
-        console.log(color);
-        setColor(color);
+        console.log(colorWithoutHash);
+        setColor(colorWithoutHash);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -170,7 +171,7 @@ const UserAppRequestItem = ({
               <Button
                 type={"button"}
                 onClick={() => {
-                  addApp(app);
+                  addApp(app, color);
                   updateAppRequest(appRequestId);
                   setCheck(!check);
                   setApproved(true);
