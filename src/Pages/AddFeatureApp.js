@@ -33,13 +33,13 @@ const AddFeatureApp = () => {
   const formik = useFormik({
     initialValues: {
       packageId: id,
-      color: selectedColor.substring(selectedColor.indexOf("#") + 1),
+      color: selectedColor,
       videoLink: "",
       websiteLink: "",
     },
     enableReinitialize: false,
     onSubmit: async (values) => {
-      values.color = selectedColor.substring(selectedColor.indexOf("#") + 1);
+      values.color = selectedColor;
       await addApp(app, values);
       const filteredRequest = requests.filter(
         (item) => item.id === featuredApp
@@ -98,8 +98,8 @@ const AddFeatureApp = () => {
                 name="color"
                 label="Select App Color"
                 value={selectedColor}
-                onChange={(color) => {
-                  setSelectedColor(color.hex);
+                onChange={(e) => {
+                  setSelectedColor(e.target.value);
                 }}
               />
               <SketchPicker
@@ -133,6 +133,7 @@ const AddFeatureApp = () => {
               </button>
             </div>
             <Backdrop
+              disableAlpha
               title="Add App"
               show={showModal}
               onClick={() => setShowModal(false)}

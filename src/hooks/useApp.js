@@ -60,7 +60,7 @@ const useApp = () => {
     await addDoc(appsCollectionRef, {
       title: values.title,
       category: values.category,
-      color: data.color,
+      color: data.color.substring(data.color.indexOf("#") + 1),
       videoLink: data.videoLink,
       websiteLink: data.websiteLink,
       description: values.description,

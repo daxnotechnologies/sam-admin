@@ -26,12 +26,13 @@ const AddApp = () => {
   const formik = useFormik({
     initialValues: {
       packageId: "",
-      color: selectedColor.substring(selectedColor.indexOf("#") + 1),
+      color: selectedColor,
       videoLink: "",
       websiteLink: "",
     },
-    enableReinitialize: true,
+    enableReinitialize: false,
     onSubmit: (values) => {
+      values.color = selectedColor;
       addApp(app, values);
       setShowModal(false);
 
@@ -79,11 +80,12 @@ const AddApp = () => {
                 name="color"
                 label="Select App Color"
                 value={selectedColor}
-                onChange={(color) => {
-                  setSelectedColor(color.hex);
+                onChange={(e) => {
+                  setSelectedColor(e.target.value);
                 }}
               />
               <SketchPicker
+                disableAlpha
                 presetColors={[]}
                 color={selectedColor}
                 onChange={(color) => {
