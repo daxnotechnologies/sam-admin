@@ -9,7 +9,6 @@ import UserAppRequestItem from "../Components/DisplayItems/UserAppRequestItem";
 
 const UsersAppsRequests = () => {
   const [check, setCheck] = useState(false);
-
   const { data: requests, isloading } = useFetch("app-requests", check);
   const date = currentDate();
 

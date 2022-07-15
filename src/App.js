@@ -17,6 +17,8 @@ import AddApp from "./Pages/AddApp";
 import EditCategory from "./Components/DisplayItems/EditCategory";
 import EditApp from "./Components/DisplayItems/EditApp";
 import UsersAppsRequests from "./Pages/UsersAppsRequests";
+import AddFeatureApp from "./Pages/AddFeatureApp";
+import { useState } from "react";
 
 function App() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -38,7 +40,10 @@ function App() {
             <Route path="/dashboard/users" element={<Users />} />
             <Route path="/dashboard/add-category" element={<AddCategory />} />
             <Route path="/dashboard/add-app" element={<AddApp />} />
-
+            <Route
+              path="/dashboard/add-featureapp/:id"
+              element={<AddFeatureApp />}
+            />
             <Route path="/dashboard/edit-app/:appId" element={<EditApp />} />
             <Route path="/dashboard/edit-user/:userId" element={<EditUser />} />
             <Route

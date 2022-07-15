@@ -55,11 +55,14 @@ const useApp = () => {
       });
   };
 
-  const addApp = async (values, color) => {
+  const addApp = async (values, data, isfeatured) => {
+    console.log(isfeatured);
     await addDoc(appsCollectionRef, {
       title: values.title,
       category: values.category,
-      color: color,
+      color: data.color,
+      videoLink: data.videoLink,
+      websiteLink: data.websiteLink,
       description: values.description,
       downloads: values.downloads,
       icon: values.icon_72,

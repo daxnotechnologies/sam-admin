@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useStateContext } from "../../contexts/ContextProvider";
 import useAddApp from "../../hooks/useAddApp";
 import useApp from "../../hooks/useApp";
 import useAppRequest from "../../hooks/useAppRequest";
@@ -20,6 +21,9 @@ const UserAppRequestItem = ({
   check,
   setCheck,
 }) => {
+  console.log(isApproved);
+  const { setFeature } = useStateContext();
+  const navigate = useNavigate();
   const { data: allUsers, isloading } = useFetch("users");
   // const { docData: user } = useFetchDoc("users", userId);
   console.log(allUsers);
@@ -27,43 +31,14 @@ const UserAppRequestItem = ({
   const { app } = useAddApp(appPackageId);
   console.log(app);
 
-  const { addApp } = useApp();
+  // const { addApp } = useApp();
   const { updateAppRequest, deleteAppRequest } = useAppRequest();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [approved, setApproved] = useState(isApproved);
-  const [loading, setLoading] = useState(true);
-  const [color, setColor] = useState(false);
-
-  useEffect(() => {
-    const getColor = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("https://api.imagga.com/v2/colors", {
-          params: {
-            image_url: app?.icon,
-          },
-          headers: {
-            Authorization:
-              "Basic YWNjXzU1MTAyMjQzMmU4YWVhOTplMWQwOGM2ZDRkOGYxNmI4NDEzNjUwOWVjMDNkZTZmZg==",
-          },
-        });
-        const color =
-          response.data.result.colors.image_colors[0]
-            .closest_palette_color_html_code;
-        const colorWithoutHash = color.substring(color.indexOf("#") + 1);
-        console.log(response.data.result.colors);
-        console.log(colorWithoutHash);
-        setColor(colorWithoutHash);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getColor();
-  }, [app]);
+  // const [approved, setApproved] = useState(isApproved);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (userId) {
@@ -72,22 +47,25 @@ const UserAppRequestItem = ({
     }
   }, [allUsers, userId]);
 
-  console.log(selectedUser);
+  // console.log(selectedUser);
+  // console.log(app?.icon);
   return (
     <>
       <div className="grid grid-cols-12 place-items-center text-center">
         <div className="col-span-4 lg:col-span-7 flex gap-4 place-self-start text-left font-semibold text-primary">
-          <div className="grid place-items-center">
-            {app?.icon ? (
-              <img
-                src={app?.icon}
-                alt=""
-                className="object-cover h-14 w-14 rounded-full"
-              />
-            ) : (
-              <div className="h-14 w-14 bg-slate-300 rounded-full" />
-            )}
-          </div>
+          {app && (
+            <div className="grid place-items-center">
+              {app?.icon?.length > 0 ? (
+                <img
+                  src={app?.icon}
+                  alt="icon"
+                  className="object-cover h-14 w-14 rounded-full"
+                />
+              ) : (
+                <div className="h-14 w-14 bg-slate-300 rounded-full" />
+              )}
+            </div>
+          )}
 
           <div className="flex flex-col gap-2">
             {app ? <p>{app.title}</p> : <p>-</p>}
@@ -99,7 +77,7 @@ const UserAppRequestItem = ({
           </div>
         </div>
         <div className="col-span-3 lg:col-span-2">
-          {approved ? (
+          {isApproved ? (
             <Button disabled={true}>Approve</Button>
           ) : (
             <Button
@@ -126,7 +104,7 @@ const UserAppRequestItem = ({
             alt
             onClick={() => {
               setShowDeleteModal(true);
-              setLoading(true);
+              // setLoading(true);
               // alert(categoryName + " with Id " + categoryId + " deleted");
             }}
           >
@@ -171,10 +149,13 @@ const UserAppRequestItem = ({
               <Button
                 type={"button"}
                 onClick={() => {
-                  addApp(app, color);
-                  updateAppRequest(appRequestId);
-                  setCheck(!check);
-                  setApproved(true);
+                  // setSelectedApp()
+                  setFeature(appRequestId);
+                  navigate(`/dashboard/add-featureapp/${appPackageId}`);
+                  // addApp(app, color);
+                  // updateAppRequest(appRequestId);
+                  // setCheck(!check);
+                  // setApproved(true);
                   setShowFeatureModal(false);
                 }}
               >
