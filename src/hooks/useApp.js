@@ -61,8 +61,8 @@ const useApp = () => {
       title: values.title,
       category: values.category,
       color: data.color.substring(data.color.indexOf("#") + 1),
-      videoLink: data.videoLink,
-      websiteLink: data.websiteLink,
+      // videoLink: data.videoLink,
+      // websiteLink: data.websiteLink,
       description: values.description,
       downloads: values.downloads,
       icon: values.icon_72,
@@ -71,7 +71,8 @@ const useApp = () => {
       developer: values.developer,
       playStoreLink: values.market_url,
       uploadedAt: serverTimestamp(),
-      promo_video: values.promo_video,
+      promo_video:
+        data.videoLink.length > 0 ? data.videoLink : values.promo_video,
       reviews: [],
       featured: false,
     });
